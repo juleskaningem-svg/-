@@ -1,0 +1,93 @@
+{% extends 'testapp/base.html' %}
+
+{% block title %}Главная - Все новости{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-newspaper text-primary"></i> Последние новости</h1>
+            <a href="{% url 'testapp:add' %}" class="btn btn-success">
+                <i class="fas fa-plus-circle"></i> Добавить новость
+            </a>
+        </div>
+
+        <!-- Поиск -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <form method="GET" action="{% url 'testapp:search' %}" class="row g-3">
+                    <div class="col-md-10">
+                        <input type="text" 
+                               name="q" 
+                               class="form-control form-control-lg" 
+                               placeholder="Поиск новостей по заголовку..." 
+                               value="{{ search_query }}">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary btn-lg w-100" type="submit">
+                            <i class="fas fa-search"></i> Найти
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if news_list %}
+            {% for news in news_list %}
+                <div class="card mb-4 shadow-sm {% if news.pub_date == today %}news-today border-warning{% endif %}">
+                    <div class="card-body">
+                        <h3 class="card-title h4">
+                            <a href="{% url 'testapp:detail' news.id %}" class="text-decoration-none">
+                                {{ news.title }}
+                            </a>
+                        </h3>
+                        <small class="text-muted">
+                            <i class="fas fa-calendar-alt"></i> {{ news.pub_date }}
+                        </small>
+                        <p class="card-text text-muted mt-2">{{ news.summary|truncatewords:30 }}</p>
+                        <a href="{% url 'testapp:detail' news.id %}" class="btn btn-outline-primary">
+                            Читать далее <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+            {% if news_list.has_other_pages %}
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        {% if news_list.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}">Первая</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ news_list.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">Предыдущая</a>
+                            </li>
+                        {% endif %}
+
+                        <li class="page-item active">
+                            <span class="page-link">{{ news_list.number }}</span>
+                        </li>
+
+                        {% if news_list.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ news_list.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">Следующая</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ news_list.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}">Последняя</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-info text-center">
+                <i class="fas fa-inbox fa-3x mb-3"></i>
+                <h4>Пока нет новостей</h4>
+                <p>Будьте первым, кто добавит новость!</p>
+                <a href="{% url 'testapp:add' %}" class="btn btn-primary">Добавить новость</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

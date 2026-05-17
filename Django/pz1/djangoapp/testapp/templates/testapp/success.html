@@ -1,0 +1,25 @@
+{% extends 'testapp/base.html' %}
+
+{% block title %}Успешно добавлено{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto text-center">
+        <div class="card shadow border-success">
+            <div class="card-body p-5">
+                <i class="fas fa-check-circle text-success display-1 mb-3"></i>
+                <h2 class="text-success">Новость успешно добавлена!</h2>
+                <p class="lead">Ваша новость опубликована и доступна для просмотра.</p>
+                <div class="mt-4">
+                    <a href="{% url 'testapp:home' %}" class="btn btn-primary me-2">
+                        <i class="fas fa-home"></i> На главную
+                    </a>
+                    <a href="{% url 'testapp:add' %}" class="btn btn-outline-success">
+                        <i class="fas fa-plus"></i> Добавить еще
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'testapp/base.html' %}
+
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'testapp:home' %}">Главная</a></li>
+                <li class="breadcrumb-item active">{{ news.title|truncatewords:5 }}</li>
+            </ol>
+        </nav>
+
+        <article class="card shadow">
+            <div class="card-header bg-white">
+                <h1 class="card-title h2 mb-3">{{ news.title }}</h1>
+                <small class="text-muted">
+                    <i class="fas fa-calendar-alt"></i> Дата публикации: {{ news.pub_date }}
+                </small>
+            </div>
+            
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <h5><i class="fas fa-info-circle"></i> Краткое описание:</h5>
+                    <p class="mb-0">{{ news.summary }}</p>
+                </div>
+                
+                <div class="mt-4">
+                    <h5><i class="fas fa-align-left"></i> Полный текст:</h5>
+                    <p style="white-space: pre-line; line-height: 1.8;">{{ news.content }}</p>
+                </div>
+            </div>
+            
+            <div class="card-footer bg-white">
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'testapp:home' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Назад
+                    </a>
+                    <a href="{% url 'testapp:delete' news.id %}" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Удалить
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'testapp/base.html' %}
+
+{% block title %}Удаление новости{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card shadow border-danger">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0"><i class="fas fa-exclamation-triangle"></i> Подтверждение удаления</h3>
+            </div>
+            <div class="card-body text-center">
+                <p class="lead">Вы уверены, что хотите удалить новость?</p>
+                <h4>"{{ news.title }}"</h4>
+                <p class="text-danger">Это действие невозможно отменить!</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'testapp:detail' news.id %}" class="btn btn-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-danger">Да, удалить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

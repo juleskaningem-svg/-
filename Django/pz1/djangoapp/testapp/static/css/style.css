@@ -1,0 +1,34 @@
+/* Стиль для новостей сегодняшней даты */
+.news-today {
+    background-color: #fff3cd !important;
+    border-left: 4px solid #ffc107 !important;
+}
+
+.news-today:hover {
+    background-color: #ffe69c !important;
+    transform: translateX(5px);
+}
+
+/* Анимация карточек */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Стили для печати */
+@media print {
+    .navbar, .btn, footer {
+        display: none !important;
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 1.25rem;
+    }
+}
